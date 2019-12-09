@@ -14,7 +14,8 @@ Agent::Agent() : sprite_texture(0),
 				 sprite_num_frames(0),
 	             sprite_w(0),
 	             sprite_h(0),
-	             draw_sprite(false)
+	             draw_sprite(false),
+				 hasArrivedToTarget(true)
 {
 }
 
@@ -29,6 +30,11 @@ Agent::~Agent()
 void Agent::setBehavior(SteeringBehavior *behavior)
 {
 	steering_behaviour = behavior;
+}
+
+void Agent::setAlgorithm(PathfindingAlgorithm* algorithm)
+{
+	pathfinding_algorithm = algorithm;
 }
 
 Vector2D Agent::getPosition()
@@ -60,6 +66,22 @@ float Agent::getMass()
 {
 	return mass;
 }
+
+bool Agent::GetHasArrivedToTarget()
+{
+	return hasArrivedToTarget;
+}
+
+void Agent::SetHasArrivedToTarget(bool value)
+{
+	hasArrivedToTarget = value;
+}
+
+Agent::PathfindingAlgorithm* Agent::getAlgorithm()
+{
+	return pathfinding_algorithm;
+}
+
 
 void Agent::setPosition(Vector2D _position)
 {
@@ -196,3 +218,49 @@ bool Agent::loadSpriteTexture(char* filename, int _num_frames)
 
 	return true;
 }
+
+void Agent::InitializeGraph(Grid* grid)
+{
+	Node node;
+	Node* aux;
+	for (int i = 0; i < grid->getNumCellX(); i++)
+	{
+		for (int j = 0; j < grid->getNumCellY(); j++)
+		{
+			if (grid->isValidCell(Vector2D(i, j)))
+			{
+				//Comprovar
+				node = Node(Vector2D(i, j));
+				aux = new Node();
+
+				if (graph.CheckNode(Vector2D(i-1, j)))
+				{
+					aux = graph.GetNode(Vector2D(i - 1, j));
+					Connexion conn(&node, aux);
+					node.AddConnexion(conn);
+					aux->AddConnexion(conn);
+				}
+
+				aux = new Node();
+
+				if (graph.CheckNode(Vector2D(i, j - 1)))
+				{
+					aux = graph.GetNode(Vector2D(i, j - 1));
+					Connexion conn(&node, aux);
+					node.AddConnexion(conn);
+					aux->AddConnexion(conn);
+					//node.UpdateNode(aux)-> position = aux.position && connections = aux.connections;
+				}
+
+				graph.AddNode(node);
+			}
+		}
+	}
+}
+
+Graf Agent::GetGraph()
+{
+	return graph;
+}
+
+

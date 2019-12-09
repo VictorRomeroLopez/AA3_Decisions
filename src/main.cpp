@@ -3,7 +3,7 @@
 #include <SDL_image.h>
 
 #include "SDL_SimpleApp.h"
-#include "SceneDecisions.h"
+#include "ScenePathFindingMouse.h"
 
 using namespace std;
 
@@ -14,9 +14,14 @@ int main(int argc, char ** argv)
 	
 	SDL_SimpleApp *app = SDL_SimpleApp::Instance();
 
-	Scene *curr_scene = new SceneDecisions;
+	Scene *curr_scene = new ScenePathFindingMouse;
 	app->setWindowTitle(curr_scene->getTitle());
 
+	
+	if (argc > 1) {
+		cout << argv[1] << endl; 
+		exit(0);
+	}
 
 	while (!quit)
 	{
@@ -30,7 +35,7 @@ int main(int argc, char ** argv)
 			if (event.key.keysym.scancode == SDL_SCANCODE_1)
 			{
 				delete(curr_scene);
-				curr_scene = new SceneDecisions;
+				curr_scene = new ScenePathFindingMouse;
 				app->setWindowTitle(curr_scene->getTitle());
 			}
 			if (event.key.keysym.scancode == SDL_SCANCODE_2)
