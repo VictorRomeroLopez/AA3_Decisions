@@ -131,6 +131,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <Image Include="..\res\spritesheet.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\res\maze.csv" />
+  </ItemGroup>
+  <ItemGroup>
     <ClCompile Include="..\src\Agent.cpp" />
     <ClCompile Include="..\src\AStar.cpp" />
     <ClCompile Include="..\src\BFS.cpp" />
@@ -159,18 +165,12 @@
     <ClInclude Include="..\src\Node.h" />
     <ClInclude Include="..\src\Path.h" />
     <ClInclude Include="..\src\PathFollowing.h" />
+    <ClInclude Include="..\src\Scene.h" />
     <ClInclude Include="..\src\ScenePathFindingMouse.h" />
+    <ClInclude Include="..\src\SDL_SimpleApp.h" />
     <ClInclude Include="..\src\Seek.h" />
     <ClInclude Include="..\src\utils.h" />
-    <ClInclude Include="..\src\Scene.h" />
-    <ClInclude Include="..\src\SDL_SimpleApp.h" />
     <ClInclude Include="..\src\Vector2D.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="..\res\spritesheet.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\res\maze.csv" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
