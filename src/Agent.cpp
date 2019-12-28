@@ -1,4 +1,10 @@
 #include "Agent.h"
+#include "DecisionMakingAlgorithm.h"
+#include "FSM.h"
+#include "FSMState.h"
+#include "FSMStateChase.h"
+#include "FSMStateFlee.h"
+#include "FSMStateWander.h"
 
 using namespace std;
 
@@ -15,7 +21,11 @@ Agent::Agent() : sprite_texture(0),
 	             sprite_w(0),
 	             sprite_h(0),
 	             draw_sprite(false),
-				 hasArrivedToTarget(true)
+				 hasArrivedToTarget(true),
+				 decisionMakingAlgorithm(new FSM()),
+				 fsmStateChase(new FSMStateChase()),
+				 fsmStateFlee(new FSMStateFlee()),
+				 fsmStateWander(new FSMStateWander())
 {
 }
 
@@ -100,9 +110,6 @@ void Agent::setVelocity(Vector2D _velocity)
 
 void Agent::update(float dtime, SDL_Event *event)
 {
-
-	//cout << "agent update:" << endl;
-
 	switch (event->type) {
 		/* Keyboard & Mouse events */
 	case SDL_KEYDOWN:
@@ -112,6 +119,8 @@ void Agent::update(float dtime, SDL_Event *event)
 	default:
 		break;
 	}
+
+	decisionMakingAlgorithm->Update(this, dtime);
 
 	// Apply the steering behavior
 	steering_behaviour->applySteeringForce(this, dtime);
@@ -262,5 +271,7 @@ Graf Agent::GetGraph()
 {
 	return graph;
 }
+
+
 
 

@@ -1,6 +1,7 @@
 #pragma once
-#include "FSM.h"
 #include "Agent.h"
+
+class FSM;
 
 class FSMState
 {

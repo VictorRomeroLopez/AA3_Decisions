@@ -11,9 +11,6 @@ ScenePathFindingMouse::ScenePathFindingMouse()
 
 	srand((unsigned int)time(NULL));
 
-	agents.push_back(GenerateAgent(new GBFS, maze));
-	agents.push_back(GenerateAgent(new BFS, maze));
-	agents.push_back(GenerateAgent(new Dijkstra, maze));
 	agents.push_back(GenerateAgent(new AStar, maze));
 
 	// set agent position coords to the center of a random cell
@@ -164,7 +161,6 @@ Agent* ScenePathFindingMouse::GenerateAgent(Agent::PathfindingAlgorithm* pathfin
 	agent->setAlgorithm(pathfindingAlgorithm);
 	agent->setTarget(Vector2D(-20, -20));
 	return agent;
-
 }
 
 bool ScenePathFindingMouse::AllAgentsOnTarget() {

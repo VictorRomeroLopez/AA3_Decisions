@@ -1,13 +1,14 @@
-#include "FSMStateFlee.h"
+#include "FSMStateWander.h"
 
-void FSMStateFlee::Enter(Agent* agent, float dtime)
+void FSMStateWander::Enter(Agent* agent, float dtime)
 {
 }
 
-void FSMStateFlee::Update(Agent* agent, float dtime)
+void FSMStateWander::Update(Agent* agent, float dtime)
 {
+	std::cout << "Wander" << std::endl;
 }
 
-void FSMStateFlee::Exit(Agent* agent, float dtime)
+void FSMStateWander::Exit(Agent* agent, float dtime)
 {
 }

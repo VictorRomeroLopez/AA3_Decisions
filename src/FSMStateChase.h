@@ -2,7 +2,7 @@
 #include "FSMState.h"
 #include "Agent.h"
 
-class FSMStateFlee : public FSMState
+class FSMStateChase : public FSMState
 {
 public:
 	void Enter(Agent* agent, float dtime);

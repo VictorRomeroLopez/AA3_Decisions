@@ -13,6 +13,12 @@
 #include "Node.h"
 
 class Grid;
+class FSM;
+class FSMState;
+class FSMStateChase;
+class FSMStateFlee;
+class FSMStateWander;
+class DecisionMakingAlgorithm;
 
 class Agent
 {
@@ -40,6 +46,11 @@ private:
 	Vector2D position;
 	Vector2D velocity;
 	Vector2D target;
+
+	FSM* decisionMakingAlgorithm;
+	FSMStateChase* fsmStateChase;
+	FSMStateFlee* fsmStateFlee;
+	FSMStateWander* fsmStateWander;
 
 	// Pathfinding
 	Path path;
@@ -88,6 +99,5 @@ public:
 	bool Agent::loadSpriteTexture(char* filename, int num_frames=1);
 	void InitializeGraph(Grid* grid);
 	Graf GetGraph();
-
 
 };

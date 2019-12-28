@@ -1,13 +1,14 @@
-#include "FSMStateFlee.h"
+#include "FSMStateChase.h"
 
-void FSMStateFlee::Enter(Agent* agent, float dtime)
+void FSMStateChase::Enter(Agent* agent, float dtime)
 {
 }
 
-void FSMStateFlee::Update(Agent* agent, float dtime)
+void FSMStateChase::Update(Agent* agent, float dtime)
 {
+	std::cout << "Chase" << std::endl;
 }
 
-void FSMStateFlee::Exit(Agent* agent, float dtime)
+void FSMStateChase::Exit(Agent* agent, float dtime)
 {
 }
