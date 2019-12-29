@@ -153,13 +153,13 @@ bool ScenePathFindingMouse::loadTextures(char* filename_bg, char* filename_coin)
 }
 
 Agent* ScenePathFindingMouse::GenerateAgent(Agent::PathfindingAlgorithm* pathfindingAlgorithm, Grid* maze) {
-
 	Agent* agent = new Agent;
 	agent->InitializeGraph(maze);
 	agent->loadSpriteTexture("../res/soldier.png", 4);
 	agent->setBehavior(new PathFollowing);
 	agent->setAlgorithm(pathfindingAlgorithm);
 	agent->setTarget(Vector2D(-20, -20));
+	agent->SetDecisionMakingAlgorithm(new FSM(agent));
 	return agent;
 }
 

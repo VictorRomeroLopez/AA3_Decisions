@@ -47,7 +47,7 @@ private:
 	Vector2D velocity;
 	Vector2D target;
 
-	FSM* decisionMakingAlgorithm;
+	DecisionMakingAlgorithm* brain;
 	FSMStateChase* fsmStateChase;
 	FSMStateFlee* fsmStateFlee;
 	FSMStateWander* fsmStateWander;
@@ -77,6 +77,10 @@ public:
 	Vector2D getPosition();
 	Vector2D getTarget();
 	Vector2D getVelocity();
+	FSMStateChase* getFSMChase();
+	FSMStateFlee* getFSMFlee();
+	FSMStateWander* getFSMWander();
+	DecisionMakingAlgorithm* getDecisionMakingAlgorithm();
 	float getMaxVelocity();
 	float getMaxForce();
 	float getMass();
@@ -99,5 +103,5 @@ public:
 	bool Agent::loadSpriteTexture(char* filename, int num_frames=1);
 	void InitializeGraph(Grid* grid);
 	Graf GetGraph();
-
+	void SetDecisionMakingAlgorithm(DecisionMakingAlgorithm* _decisionMakingAlgorithm);
 };

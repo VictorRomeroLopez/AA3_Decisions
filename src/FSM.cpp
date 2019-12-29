@@ -3,13 +3,14 @@
 #include "FSMStateFlee.h"
 #include "FSMStateWander.h"
 
-FSM::FSM() : current_state(new FSMStateWander())
+FSM::FSM() : current_state(new FSMStateWander()) {}
+
+FSM::FSM(Agent* agent) : current_state(new FSMStateWander())
 {
+	current_state->Enter(agent, 0);
 }
 
-FSM::~FSM()
-{
-}
+FSM::~FSM() {}
 
 void FSM::Update(Agent* agent, float dtime)
 {

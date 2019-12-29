@@ -14,6 +14,7 @@
 #include "Grid.h"
 #include "Dijkstra.h"
 #include "AStar.h"
+#include "FSM.h"
 
 class ScenePathFindingMouse :
 	public Scene

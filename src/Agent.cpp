@@ -22,7 +22,6 @@ Agent::Agent() : sprite_texture(0),
 	             sprite_h(0),
 	             draw_sprite(false),
 				 hasArrivedToTarget(true),
-				 decisionMakingAlgorithm(new FSM()),
 				 fsmStateChase(new FSMStateChase()),
 				 fsmStateFlee(new FSMStateFlee()),
 				 fsmStateWander(new FSMStateWander())
@@ -62,6 +61,11 @@ Vector2D Agent::getVelocity()
 	return velocity;
 }
 
+DecisionMakingAlgorithm* Agent::getDecisionMakingAlgorithm()
+{
+	return brain;
+}
+
 float Agent::getMaxVelocity()
 {
 	return max_velocity;
@@ -92,6 +96,17 @@ Agent::PathfindingAlgorithm* Agent::getAlgorithm()
 	return pathfinding_algorithm;
 }
 
+FSMStateChase* Agent::getFSMChase() {
+	return fsmStateChase;
+}
+
+FSMStateFlee* Agent::getFSMFlee() {
+	return fsmStateFlee;
+}
+
+FSMStateWander* Agent::getFSMWander() {
+	return fsmStateWander;
+}
 
 void Agent::setPosition(Vector2D _position)
 {
@@ -120,7 +135,7 @@ void Agent::update(float dtime, SDL_Event *event)
 		break;
 	}
 
-	decisionMakingAlgorithm->Update(this, dtime);
+	brain->Update(this, dtime);
 
 	// Apply the steering behavior
 	steering_behaviour->applySteeringForce(this, dtime);
@@ -272,6 +287,9 @@ Graf Agent::GetGraph()
 	return graph;
 }
 
+void Agent::SetDecisionMakingAlgorithm(DecisionMakingAlgorithm* _decisionMakingAlgorithm) {
+	brain = _decisionMakingAlgorithm;
+}
 
 
 
