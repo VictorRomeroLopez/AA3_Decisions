@@ -12,19 +12,21 @@ ScenePathFindingMouse::ScenePathFindingMouse()
 	srand((unsigned int)time(NULL));
 
 	agents.push_back(GenerateAgent(new AStar, maze));
+	agents.push_back(GenerateAgent(new AStar, maze, true));
 
 	// set agent position coords to the center of a random cell
-	Vector2D rand_cell(-1,-1);
-	while (!maze->isValidCell(rand_cell))
-		rand_cell = Vector2D((float)(rand() % maze->getNumCellX()), (float)(rand() % maze->getNumCellY()));
+	for (int i = 0; i < agents.size(); i++) {
+		Vector2D rand_cell(-1, -1);
+		while (!maze->isValidCell(rand_cell))
+			rand_cell = Vector2D((float)(rand() % maze->getNumCellX()), (float)(rand() % maze->getNumCellY()));
 
-	for (int i = 0; i < agents.size(); i++)
 		agents[i]->setPosition(maze->cell2pix(rand_cell));
+	}
 
 	idsAlreadyPicked = new int[numCoins];
 	coinPosition = new Vector2D[numCoins];
 
-	UpdateAllPaths();
+	//UpdateAllPaths();
 }
 
 ScenePathFindingMouse::~ScenePathFindingMouse()
@@ -48,6 +50,13 @@ void ScenePathFindingMouse::update(float dtime, SDL_Event *event)
 		if (event->key.keysym.scancode == SDL_SCANCODE_SPACE)
 			draw_grid = !draw_grid;
 		break;
+	case SDL_MOUSEMOTION:
+	case SDL_MOUSEBUTTONDOWN:
+		if (event->button.button == SDL_BUTTON_LEFT)
+		{
+			agents[0]->addPathPoint(Vector2D(event->button.x, event->button.y));
+		}
+		break;
 	default:
 		break;
 	}
@@ -55,19 +64,19 @@ void ScenePathFindingMouse::update(float dtime, SDL_Event *event)
 	for (int i = 0; i < agents.size(); i++) {
 		agents[i]->update(dtime, event);
 		// if we have arrived to the coin, replace it in a random cell!
-		if ((agents[i]->getCurrentTargetIndex() == -1) && (maze->pix2cell(agents[i]->getPosition()) == coinPosition[numCoins - 1]))
+		/*if ((agents[i]->getCurrentTargetIndex() == -1) && (maze->pix2cell(agents[i]->getPosition()) == coinPosition[numCoins - 1]))
 		{
 			agents[i]->SetHasArrivedToTarget(true);
-		}
+		}*/
 	}
 
-	UpdateAllPaths();
+	//UpdateAllPaths();
 }
 
 void ScenePathFindingMouse::draw()
 {
-	drawMaze();
-	drawCoin();
+	//drawMaze();
+	//drawCoin();
 
 	if (draw_grid)
 	{
@@ -152,14 +161,23 @@ bool ScenePathFindingMouse::loadTextures(char* filename_bg, char* filename_coin)
 	return true;
 }
 
-Agent* ScenePathFindingMouse::GenerateAgent(Agent::PathfindingAlgorithm* pathfindingAlgorithm, Grid* maze) {
+Agent* ScenePathFindingMouse::GenerateAgent(Agent::PathfindingAlgorithm* pathfindingAlgorithm, Grid* maze, bool zombie) {
 	Agent* agent = new Agent;
 	agent->InitializeGraph(maze);
-	agent->loadSpriteTexture("../res/soldier.png", 4);
-	agent->setBehavior(new PathFollowing);
+	if(zombie)
+		agent->loadSpriteTexture("../res/zombie2.png", 8);
+	else
+		agent->loadSpriteTexture("../res/soldier.png", 4);
 	agent->setAlgorithm(pathfindingAlgorithm);
 	agent->setTarget(Vector2D(-20, -20));
-	agent->SetDecisionMakingAlgorithm(new FSM(agent));
+	if (zombie) 
+	{
+		agent->SetDecisionMakingAlgorithm(new FSM(agent));
+		agent->setIsZombie(true);
+		agent->setAgentTarget(agents[0]);
+	}
+	else
+		agent->setBehavior(new PathFollowing());
 	return agent;
 }
 

@@ -15,6 +15,7 @@
 #include "Dijkstra.h"
 #include "AStar.h"
 #include "FSM.h"
+#include "Wander.h"
 
 class ScenePathFindingMouse :
 	public Scene
@@ -41,7 +42,7 @@ private:
 	bool loadTextures(char* filename_bg, char* filename_coin); 
 	bool AllAgentsOnTarget();
 	void UpdateAllPaths();
-	Agent* GenerateAgent(Agent::PathfindingAlgorithm* pathfindingAlgorithm, Grid* maze);
+	Agent* GenerateAgent(Agent::PathfindingAlgorithm* pathfindingAlgorithm, Grid* maze, bool zombie = false);
 	void UpdatePathAlgorithm(int idAgent); 
 	void GenerateCoinPositions();
 	int GetNextTargetId(int actualID);

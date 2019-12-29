@@ -24,7 +24,9 @@ Agent::Agent() : sprite_texture(0),
 				 hasArrivedToTarget(true),
 				 fsmStateChase(new FSMStateChase()),
 				 fsmStateFlee(new FSMStateFlee()),
-				 fsmStateWander(new FSMStateWander())
+				 fsmStateWander(new FSMStateWander()),
+				 visionRadius(200.f),
+				 isZombie(false)
 {
 }
 
@@ -59,6 +61,31 @@ Vector2D Agent::getTarget()
 Vector2D Agent::getVelocity()
 {
 	return velocity;
+}
+
+float Agent::getVisionRadius()
+{
+	return visionRadius;
+}
+
+void Agent::setVisionRadius(float newRadius)
+{
+	visionRadius = newRadius;
+}
+
+void Agent::setIsZombie(bool isItZombie)
+{
+	isZombie = isItZombie;
+}
+
+Agent* Agent::getAgentTarget()
+{
+	return agentTarget;
+}
+
+void Agent::setAgentTarget(Agent* agentToTarget)
+{
+	agentTarget = agentToTarget;
 }
 
 DecisionMakingAlgorithm* Agent::getDecisionMakingAlgorithm()
@@ -135,7 +162,8 @@ void Agent::update(float dtime, SDL_Event *event)
 		break;
 	}
 
-	brain->Update(this, dtime);
+	if(isZombie)
+		brain->Update(this, dtime);
 
 	// Apply the steering behavior
 	steering_behaviour->applySteeringForce(this, dtime);
@@ -152,6 +180,7 @@ void Agent::update(float dtime, SDL_Event *event)
 }
 
 
+
 void Agent::addPathPoint(Vector2D point)
 {
 	if (path.points.size() > 0)
@@ -160,7 +189,6 @@ void Agent::addPathPoint(Vector2D point)
 
 	path.points.push_back(point);
 }
-
 
 int Agent::getCurrentTargetIndex()
 {
@@ -198,6 +226,7 @@ void Agent::draw()
 			SDL_RenderDrawLine(TheApp::Instance()->getRenderer(), (int)(path.points[i - 1].x), (int)(path.points[i - 1].y), (int)(path.points[i].x), (int)(path.points[i].y));
 	}
 
+	
 	if (draw_sprite)
 	{
 		Uint32 sprite;
@@ -211,14 +240,14 @@ void Agent::draw()
 		SDL_Rect dstrect = { (int)position.x - (sprite_w / 2), (int)position.y - (sprite_h / 2), sprite_w, sprite_h };
 		SDL_Point center = { sprite_w / 2, sprite_h / 2 };
 		SDL_RenderCopyEx(TheApp::Instance()->getRenderer(), sprite_texture, &srcrect, &dstrect, orientation+90, &center, SDL_FLIP_NONE);
+		draw_circle(TheApp::Instance()->getRenderer(), (int)position.x, (int)position.y, visionRadius, 255, 0, 0, 255);
+
 	}
 	else 
 	{
 		draw_circle(TheApp::Instance()->getRenderer(), (int)position.x, (int)position.y, 15, 255, 255, 255, 255);
-		SDL_RenderDrawLine(TheApp::Instance()->getRenderer(), (int)position.x, (int)position.y, (int)(position.x+15*cos(orientation*DEG2RAD)), (int)(position.y+15*sin(orientation*DEG2RAD)));
+		SDL_RenderDrawLine(TheApp::Instance()->getRenderer(), (int)position.x - (sprite_w / 2), (int)position.y - (sprite_h / 2), (int)(position.x+15*cos(orientation*DEG2RAD)), (int)(position.y+15*sin(orientation*DEG2RAD)));
 	}
-
-	
 }
 
 bool Agent::loadSpriteTexture(char* filename, int _num_frames)
@@ -291,5 +320,40 @@ void Agent::SetDecisionMakingAlgorithm(DecisionMakingAlgorithm* _decisionMakingA
 	brain = _decisionMakingAlgorithm;
 }
 
+void Agent::setCircleCenter(Vector2D circleCenter) {
+	this->circleCenter = circleCenter;
+}
+
+float Agent::getOrientation() {
+	return orientation;
+}
+
+Vector2D Agent::getCircleCenter() {
+	return circleCenter;
+}
+
+void Agent::getDesiredVelocity(Vector2D& desiredVelocityOut, bool seek, float speedFactor) {
+	if (seek)
+		desiredVelocityOut = target - position;
+	else
+		desiredVelocityOut = position - target;
+	desiredVelocityOut.Normalize();
+	desiredVelocityOut *= max_velocity * speedFactor;
+}
+
+void Agent::calculateSteeringForce(Vector2D& steeringForce, Vector2D desiredVelocity)
+{
+	vDelta = desiredVelocity - velocity;
+	vDelta /= max_velocity;
+
+	steeringForce = vDelta * max_force;
+}
+
+void Agent::UpdateForces(Vector2D steeringForce, float dtime)
+{
+	velocity += (steeringForce / mass) * dtime;
+	velocity.Truncate(max_velocity);
+	position += velocity * dtime;
+}
 
 

@@ -11,7 +11,6 @@ void FSMStateChase::Enter(Agent* agent, float dtime)
 void FSMStateChase::Update(Agent* agent, float dtime)
 {
 	std::cout << "Chase" << std::endl;
-	((FSM*)agent->getDecisionMakingAlgorithm())->ChangeState(agent->getFSMFlee(), agent, dtime);
 }
 
 void FSMStateChase::Exit(Agent* agent, float dtime)

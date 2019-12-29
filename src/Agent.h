@@ -46,7 +46,12 @@ private:
 	Vector2D position;
 	Vector2D velocity;
 	Vector2D target;
-
+	Vector2D vDelta;
+	Vector2D circleCenter;
+	float visionRadius;
+	bool isZombie;
+	Agent* agentTarget;
+	
 	DecisionMakingAlgorithm* brain;
 	FSMStateChase* fsmStateChase;
 	FSMStateFlee* fsmStateFlee;
@@ -77,6 +82,11 @@ public:
 	Vector2D getPosition();
 	Vector2D getTarget();
 	Vector2D getVelocity();
+	float getVisionRadius();
+	void setVisionRadius(float newRadius);
+	void setIsZombie(bool isItZombie);
+	Agent* getAgentTarget();
+	void setAgentTarget(Agent* agentToTarget);
 	FSMStateChase* getFSMChase();
 	FSMStateFlee* getFSMFlee();
 	FSMStateWander* getFSMWander();
@@ -104,4 +114,11 @@ public:
 	void InitializeGraph(Grid* grid);
 	Graf GetGraph();
 	void SetDecisionMakingAlgorithm(DecisionMakingAlgorithm* _decisionMakingAlgorithm);
+
+	void setCircleCenter(Vector2D circleCenter);
+	float getOrientation();
+	Vector2D getCircleCenter();
+	void getDesiredVelocity(Vector2D& desiredVelocityOut, bool seek = true, float speedFactor = 1);
+	void calculateSteeringForce(Vector2D& steeringForce, Vector2D desiredVelocity);
+	void UpdateForces(Vector2D steeringForce, float dtime);
 };

@@ -159,6 +159,7 @@
     <ClCompile Include="..\src\SDL_SimpleApp.cpp" />
     <ClCompile Include="..\src\Seek.cpp" />
     <ClCompile Include="..\src\utils.cpp" />
+    <ClCompile Include="..\src\Wander.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\Agent.h" />
@@ -185,6 +186,7 @@
     <ClInclude Include="..\src\Seek.h" />
     <ClInclude Include="..\src\utils.h" />
     <ClInclude Include="..\src\Vector2D.h" />
+    <ClInclude Include="..\src\Wander.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
