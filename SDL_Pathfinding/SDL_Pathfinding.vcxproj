@@ -143,6 +143,7 @@
     <ClCompile Include="..\src\Connexion.cpp" />
     <ClCompile Include="..\src\DecisionMakingAlgorithm.cpp" />
     <ClCompile Include="..\src\Dijkstra.cpp" />
+    <ClCompile Include="..\src\FleeAgent.cpp" />
     <ClCompile Include="..\src\FSM.cpp" />
     <ClCompile Include="..\src\FSMState.cpp" />
     <ClCompile Include="..\src\FSMStateChase.cpp" />
@@ -150,6 +151,8 @@
     <ClCompile Include="..\src\FSMStateWander.cpp" />
     <ClCompile Include="..\src\GBFS.cpp" />
     <ClCompile Include="..\src\GOAP.cpp" />
+    <ClCompile Include="..\src\GOAPAction.cpp" />
+    <ClCompile Include="..\src\GOAPAstar.cpp" />
     <ClCompile Include="..\src\Graf.cpp" />
     <ClCompile Include="..\src\Grid.cpp" />
     <ClCompile Include="..\src\main.cpp" />
@@ -158,8 +161,10 @@
     <ClCompile Include="..\src\ScenePathFindingMouse.cpp" />
     <ClCompile Include="..\src\SDL_SimpleApp.cpp" />
     <ClCompile Include="..\src\Seek.cpp" />
+    <ClCompile Include="..\src\SeekAgent.cpp" />
     <ClCompile Include="..\src\utils.cpp" />
     <ClCompile Include="..\src\Wander.cpp" />
+    <ClCompile Include="..\src\WSR.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\Agent.h" />
@@ -168,6 +173,7 @@
     <ClInclude Include="..\src\Connexion.h" />
     <ClInclude Include="..\src\DecisionMakingAlgorithm.h" />
     <ClInclude Include="..\src\Dijkstra.h" />
+    <ClInclude Include="..\src\FleeAgent.h" />
     <ClInclude Include="..\src\FSM.h" />
     <ClInclude Include="..\src\FSMState.h" />
     <ClInclude Include="..\src\FSMStateChase.h" />
@@ -175,6 +181,8 @@
     <ClInclude Include="..\src\FSMStateWander.h" />
     <ClInclude Include="..\src\GBFS.h" />
     <ClInclude Include="..\src\GOAP.h" />
+    <ClInclude Include="..\src\GOAPAction.h" />
+    <ClInclude Include="..\src\GOAPAstar.h" />
     <ClInclude Include="..\src\Graf.h" />
     <ClInclude Include="..\src\Grid.h" />
     <ClInclude Include="..\src\Node.h" />
@@ -184,9 +192,11 @@
     <ClInclude Include="..\src\ScenePathFindingMouse.h" />
     <ClInclude Include="..\src\SDL_SimpleApp.h" />
     <ClInclude Include="..\src\Seek.h" />
+    <ClInclude Include="..\src\SeekAgent.h" />
     <ClInclude Include="..\src\utils.h" />
     <ClInclude Include="..\src\Vector2D.h" />
     <ClInclude Include="..\src\Wander.h" />
+    <ClInclude Include="..\src\WSR.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

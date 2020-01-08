@@ -26,7 +26,8 @@ Agent::Agent() : sprite_texture(0),
 				 fsmStateFlee(new FSMStateFlee()),
 				 fsmStateWander(new FSMStateWander()),
 				 visionRadius(200.f),
-				 isZombie(false)
+				 isZombie(false),
+				 hasWeapon(false)
 {
 }
 
@@ -63,6 +64,11 @@ Vector2D Agent::getVelocity()
 	return velocity;
 }
 
+void Agent::setMaxVelocity(int newMaxVelocity)
+{
+	max_velocity = newMaxVelocity;
+}
+
 float Agent::getVisionRadius()
 {
 	return visionRadius;
@@ -76,6 +82,16 @@ void Agent::setVisionRadius(float newRadius)
 void Agent::setIsZombie(bool isItZombie)
 {
 	isZombie = isItZombie;
+}
+
+bool Agent::getHasWeapon()
+{
+	return hasWeapon;
+}
+
+void Agent::setHasWeapon(bool doesHeHaveAWeapon)
+{
+	hasWeapon = doesHeHaveAWeapon;
 }
 
 Agent* Agent::getAgentTarget()
@@ -166,7 +182,7 @@ void Agent::update(float dtime, SDL_Event *event)
 		brain->Update(this, dtime);
 
 	// Apply the steering behavior
-	steering_behaviour->applySteeringForce(this, dtime);
+	//steering_behaviour->applySteeringForce(this, dtime);
 	
 	// Update orientation
 	if (velocity.Length())

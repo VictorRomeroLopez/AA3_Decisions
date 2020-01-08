@@ -56,6 +56,8 @@ void ScenePathFindingMouse::update(float dtime, SDL_Event *event)
 		{
 			agents[0]->addPathPoint(Vector2D(event->button.x, event->button.y));
 		}
+		if (event->button.button == SDL_BUTTON_RIGHT)
+			agents[0]->setHasWeapon(!agents[0]->getHasWeapon());
 		break;
 	default:
 		break;
@@ -172,9 +174,10 @@ Agent* ScenePathFindingMouse::GenerateAgent(Agent::PathfindingAlgorithm* pathfin
 	agent->setTarget(Vector2D(-20, -20));
 	if (zombie) 
 	{
-		agent->SetDecisionMakingAlgorithm(new FSM(agent));
+		agent->SetDecisionMakingAlgorithm(new GOAP());
 		agent->setIsZombie(true);
 		agent->setAgentTarget(agents[0]);
+		agent->setMaxVelocity(100);
 	}
 	else
 		agent->setBehavior(new PathFollowing());

@@ -50,6 +50,7 @@ private:
 	Vector2D circleCenter;
 	float visionRadius;
 	bool isZombie;
+	bool hasWeapon;
 	Agent* agentTarget;
 	
 	DecisionMakingAlgorithm* brain;
@@ -82,9 +83,12 @@ public:
 	Vector2D getPosition();
 	Vector2D getTarget();
 	Vector2D getVelocity();
+	void setMaxVelocity(int newMaxVelocity);
 	float getVisionRadius();
 	void setVisionRadius(float newRadius);
 	void setIsZombie(bool isItZombie);
+	bool getHasWeapon();
+	void setHasWeapon(bool doesHeHaveAWeapon);
 	Agent* getAgentTarget();
 	void setAgentTarget(Agent* agentToTarget);
 	FSMStateChase* getFSMChase();

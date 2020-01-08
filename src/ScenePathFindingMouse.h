@@ -15,6 +15,7 @@
 #include "Dijkstra.h"
 #include "AStar.h"
 #include "FSM.h"
+#include "GOAP.h"
 #include "Wander.h"
 
 class ScenePathFindingMouse :
